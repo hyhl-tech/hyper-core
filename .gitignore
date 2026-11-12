@@ -1,24 +1,40 @@
-# iverilog / vvp 仿真产物
+# ---------------------------------------------------------------------------
+# Hyper Core - files that must NOT be committed
+# Keep this list narrow: sim_output.txt and run.bat ARE part of the repo.
+# ---------------------------------------------------------------------------
+
+# Icarus Verilog compiler output / waveforms
 *.vvp
 *.vcd
-*.log
+*.vcd.gz
+*.fst
+*.lxt
+*.lxt2
 *.out
 
-# GTKWave 波形文件
-*.gtkw
-*.gtkwave
+# Simulation / synthesis scratch output
+*.log
+*.rpt
+*.ys
+*.json
+*.bit
+*.bin
+build/
+obj/
+_scratch/
+tmp/
 
-# 编译中间文件（如果有）
-*.o
-*.d
-
-# 编辑器 / IDE
+# Editor / IDE
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
+*.bak
+*.orig
+tags
 
-# 操作系统
+# OS
 .DS_Store
 Thumbs.db
+desktop.ini
