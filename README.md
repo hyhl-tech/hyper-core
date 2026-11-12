@@ -196,4 +196,4 @@ tb_pipeline : PASS  0 个 FAIL
 
 ## 9. 许可证
 
-见仓库根目录的 `LICENSE` 文件。
+License: AGPL-3.0
