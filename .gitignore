@@ -1,0 +1,24 @@
+# iverilog / vvp 仿真产物
+*.vvp
+*.vcd
+*.log
+*.out
+
+# GTKWave 波形文件
+*.gtkw
+*.gtkwave
+
+# 编译中间文件（如果有）
+*.o
+*.d
+
+# 编辑器 / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 操作系统
+.DS_Store
+Thumbs.db
