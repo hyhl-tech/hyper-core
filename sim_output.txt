@@ -1,0 +1,112 @@
+############################################################
+# Hyper Core - REAL Icarus Verilog 12.0 terminal output
+# iverilog -o tb_cpu.vvp <9 rtl files> tb_cpu.v   && vvp tb_cpu.vvp
+# iverilog -o tb_pipeline.vvp <9 rtl files> tb_pipeline.v && vvp tb_pipeline.vvp
+############################################################
+
+========== vvp tb_cpu.vvp ==========
+================ Hyper Core : tb_cpu ================
+cyc | pc_out   | alu_result | x1 x2 x3 x4 x5 x6
+----+----------+------------+-----------------------
+  0 | 00000004 | 00000000   |  0  0  0  0  0  0
+  1 | 00000008 | 00000005   |  0  0  0  0  0  0
+  2 | 0000000c | 00000003   |  0  0  0  0  0  0
+  3 | 00000010 | 00000008   |  0  0  0  0  0  0
+  4 | 00000014 | 00000000   |  5  0  0  0  0  0
+  5 | 00000018 | 00000000   |  5  3  0  0  0  0
+  6 | 00000018 | 00000000   |  5  3  8  0  0  0
+  7 | 0000001c | 00000008   |  5  3  8  0  0  0
+  8 | 00000020 | 0000001c   |  5  3  8  8  0  0
+  9 | 00000020 | 00000000   |  5  3  8  8  0  0
+ 10 | 00000024 | 00000000   |  5  3  8  8  0  8
+ 11 | 00000028 | 00000000   |  5  3  8  8 28  8
+ 12 | 00000020 | 00000000   |  5  3  8  8 28  8
+ 13 | 00000024 | 00000000   |  5  3  8  8 28  8
+ 14 | 00000028 | 00000000   |  5  3  8  8 28  8
+ 15 | 00000020 | 00000000   |  5  3  8  8 28  8
+ 16 | 00000024 | 00000000   |  5  3  8  8 28  8
+ 17 | 00000028 | 00000000   |  5  3  8  8 28  8
+ 18 | 00000020 | 00000000   |  5  3  8  8 28  8
+ 19 | 00000024 | 00000000   |  5  3  8  8 28  8
+ 20 | 00000028 | 00000000   |  5  3  8  8 28  8
+ 21 | 00000020 | 00000000   |  5  3  8  8 28  8
+ 22 | 00000024 | 00000000   |  5  3  8  8 28  8
+ 23 | 00000028 | 00000000   |  5  3  8  8 28  8
+ 24 | 00000020 | 00000000   |  5  3  8  8 28  8
+ 25 | 00000024 | 00000000   |  5  3  8  8 28  8
+ 26 | 00000028 | 00000000   |  5  3  8  8 28  8
+ 27 | 00000020 | 00000000   |  5  3  8  8 28  8
+ 28 | 00000024 | 00000000   |  5  3  8  8 28  8
+ 29 | 00000028 | 00000000   |  5  3  8  8 28  8
+---- final architectural state ----
+x1=5 x2=3 x3=8 x4=8 x5=28 x6=8  dmem[0]=8
+perf: cycles=30 retired=13 stalls=1 flushes=7
+perf: stall_load_use=1 flush_branch=6 flush_jal=1 flush_jalr=0
+perf: fwd EXMEM(a=0,b=2) MEMWB(a=2,b=0) WB_ID(a=0,b=0)
+PASS : tb_cpu  (x1=5 x2=3 x3=8 x4=8 x5=28 x6=8, dmem[0]=8)
+tb_cpu.v:94: $finish called at 320000 (1ps)
+
+========== vvp tb_pipeline.vvp ==========
+=== PHASE A : main firmware (load-use / JAL / branch flush) ===
+[cyc   7] LOAD-USE STALL : held IF/ID pc=00000014 (consumer) | load pc=00000010
+[cyc  10] JAL      FLUSH : squashed IF/ID pc=0000001c | IF pc=00000020 | redirect pc=00000020
+[cyc  13] BRANCH   FLUSH : squashed IF/ID pc=00000024 | IF pc=00000028 | redirect pc=00000020
+[cyc  16] BRANCH   FLUSH : squashed IF/ID pc=00000024 | IF pc=00000028 | redirect pc=00000020
+[cyc  19] BRANCH   FLUSH : squashed IF/ID pc=00000024 | IF pc=00000028 | redirect pc=00000020
+[cyc  22] BRANCH   FLUSH : squashed IF/ID pc=00000024 | IF pc=00000028 | redirect pc=00000020
+[cyc  25] BRANCH   FLUSH : squashed IF/ID pc=00000024 | IF pc=00000028 | redirect pc=00000020
+[cyc  28] BRANCH   FLUSH : squashed IF/ID pc=00000024 | IF pc=00000028 | redirect pc=00000020
+--- PHASE A counters: stalls=1 flushes=7 (jal=1 jalr=0 branch=6)
+--- PHASE A perf: cycles=30 retired=13 stalls=1 flushes=7
+--- PHASE A bypass: EXMEM(a=0,b=2) MEMWB(a=2,b=0) WB_ID(a=0,b=0)
+=== PHASE B : JALR redirect / link / wrong-path ===
+[cyc   4] JALR     FLUSH : squashed IF/ID pc=00000008 | IF pc=0000000c | redirect pc=00000030
+[cyc   8] BRANCH   FLUSH : squashed IF/ID pc=00000038 | IF pc=0000003c | redirect pc=00000034
+[cyc  11] BRANCH   FLUSH : squashed IF/ID pc=00000038 | IF pc=0000003c | redirect pc=00000034
+[cyc  14] BRANCH   FLUSH : squashed IF/ID pc=00000038 | IF pc=0000003c | redirect pc=00000034
+[cyc  17] BRANCH   FLUSH : squashed IF/ID pc=00000038 | IF pc=0000003c | redirect pc=00000034
+[cyc  20] BRANCH   FLUSH : squashed IF/ID pc=00000038 | IF pc=0000003c | redirect pc=00000034
+[cyc  23] BRANCH   FLUSH : squashed IF/ID pc=00000038 | IF pc=0000003c | redirect pc=00000034
+[cyc  26] BRANCH   FLUSH : squashed IF/ID pc=00000038 | IF pc=0000003c | redirect pc=00000034
+[cyc  29] BRANCH   FLUSH : squashed IF/ID pc=00000038 | IF pc=0000003c | redirect pc=00000034
+--- PHASE B counters: stalls=0 flushes=9 (jalr=1 branch=8)
+=== PHASE C : full RV32I instruction / memory / branch coverage ===
+[cyc  45] BRANCH   FLUSH : squashed IF/ID pc=000000ac | IF pc=000000b0 | redirect pc=000000b0
+[cyc  48] BRANCH   FLUSH : squashed IF/ID pc=000000b4 | IF pc=000000b8 | redirect pc=000000b8
+[cyc  51] BRANCH   FLUSH : squashed IF/ID pc=000000bc | IF pc=000000c0 | redirect pc=000000c0
+[cyc  54] BRANCH   FLUSH : squashed IF/ID pc=000000c4 | IF pc=000000c8 | redirect pc=000000c8
+[cyc  57] BRANCH   FLUSH : squashed IF/ID pc=000000cc | IF pc=000000d0 | redirect pc=000000d0
+[cyc  60] BRANCH   FLUSH : squashed IF/ID pc=000000d4 | IF pc=000000d8 | redirect pc=000000d8
+[cyc  75] JAL      FLUSH : squashed IF/ID pc=0000010c | IF pc=00000110 | redirect pc=00000110
+[cyc  78] BRANCH   FLUSH : squashed IF/ID pc=00000114 | IF pc=00000118 | redirect pc=00000110
+[cyc  81] BRANCH   FLUSH : squashed IF/ID pc=00000114 | IF pc=00000118 | redirect pc=00000110
+[cyc  84] BRANCH   FLUSH : squashed IF/ID pc=00000114 | IF pc=00000118 | redirect pc=00000110
+[cyc  87] BRANCH   FLUSH : squashed IF/ID pc=00000114 | IF pc=00000118 | redirect pc=00000110
+[cyc  90] BRANCH   FLUSH : squashed IF/ID pc=00000114 | IF pc=00000118 | redirect pc=00000110
+[cyc  93] BRANCH   FLUSH : squashed IF/ID pc=00000114 | IF pc=00000118 | redirect pc=00000110
+[cyc  96] BRANCH   FLUSH : squashed IF/ID pc=00000114 | IF pc=00000118 | redirect pc=00000110
+[cyc  99] BRANCH   FLUSH : squashed IF/ID pc=00000114 | IF pc=00000118 | redirect pc=00000110
+[cyc 102] BRANCH   FLUSH : squashed IF/ID pc=00000114 | IF pc=00000118 | redirect pc=00000110
+[cyc 105] BRANCH   FLUSH : squashed IF/ID pc=00000114 | IF pc=00000118 | redirect pc=00000110
+[cyc 108] BRANCH   FLUSH : squashed IF/ID pc=00000114 | IF pc=00000118 | redirect pc=00000110
+[cyc 111] BRANCH   FLUSH : squashed IF/ID pc=00000114 | IF pc=00000118 | redirect pc=00000110
+[cyc 114] BRANCH   FLUSH : squashed IF/ID pc=00000114 | IF pc=00000118 | redirect pc=00000110
+[cyc 117] BRANCH   FLUSH : squashed IF/ID pc=00000114 | IF pc=00000118 | redirect pc=00000110
+[cyc 120] BRANCH   FLUSH : squashed IF/ID pc=00000114 | IF pc=00000118 | redirect pc=00000110
+[cyc 123] BRANCH   FLUSH : squashed IF/ID pc=00000114 | IF pc=00000118 | redirect pc=00000110
+[cyc 126] BRANCH   FLUSH : squashed IF/ID pc=00000114 | IF pc=00000118 | redirect pc=00000110
+[cyc 129] BRANCH   FLUSH : squashed IF/ID pc=00000114 | IF pc=00000118 | redirect pc=00000110
+[cyc 132] BRANCH   FLUSH : squashed IF/ID pc=00000114 | IF pc=00000118 | redirect pc=00000110
+[cyc 135] BRANCH   FLUSH : squashed IF/ID pc=00000114 | IF pc=00000118 | redirect pc=00000110
+[cyc 138] BRANCH   FLUSH : squashed IF/ID pc=00000114 | IF pc=00000118 | redirect pc=00000110
+--- PHASE C counters: stalls=0 flushes=28 (jal=1 branch=27)
+--- PHASE C perf: cycles=140 retired=82
+=== PHASE D : bypass matrix (EX/MEM->EX, MEM/WB->EX, WB->ID) ===
+[cyc  12] BRANCH   FLUSH : squashed IF/ID pc=00000028 | IF pc=0000002c | redirect pc=00000024
+[cyc  15] BRANCH   FLUSH : squashed IF/ID pc=00000028 | IF pc=0000002c | redirect pc=00000024
+[cyc  18] BRANCH   FLUSH : squashed IF/ID pc=00000028 | IF pc=0000002c | redirect pc=00000024
+[cyc  21] BRANCH   FLUSH : squashed IF/ID pc=00000028 | IF pc=0000002c | redirect pc=00000024
+[cyc  24] BRANCH   FLUSH : squashed IF/ID pc=00000028 | IF pc=0000002c | redirect pc=00000024
+--- PHASE D bypass counters: EXMEM(a=1,b=0) MEMWB(a=1,b=0) WB_ID(a=1,b=0)
+PASS : tb_pipeline (load-use stall, branch flush, JAL/JALR redirect, RV32I coverage, bypass matrix)
+tb_pipeline.v:314: $finish called at 2320000 (1ps)
